@@ -81,47 +81,6 @@ main {
   max-height:42vh !important;
   overflow-y:auto !important;
 }
-
-/* Keep the right-side menu inside the screen height.
-   Selected Aircraft stays dynamic with no internal scrollbar; Aircraft Intentions scrolls. */
-.rightPanel {
-  height:100% !important;
-  max-height:100% !important;
-  min-height:0 !important;
-  overflow:hidden !important;
-}
-.rightPanel .selectedCard {
-  flex:0 0 auto !important;
-  max-height:none !important;
-  overflow:visible !important;
-  display:block !important;
-}
-#selectedPanel {
-  overflow:visible !important;
-  max-height:none !important;
-  padding-right:0 !important;
-}
-.rightPanel .intentionsCard {
-  flex:1 1 auto !important;
-  min-height:90px !important;
-  overflow:hidden !important;
-  display:flex !important;
-  flex-direction:column !important;
-}
-.rightPanel .intentionsCard h2 {
-  flex:0 0 auto !important;
-}
-#calls {
-  flex:1 1 auto !important;
-  min-height:0 !important;
-  max-height:none !important;
-  overflow-y:auto !important;
-}
-.rightPanel .syncCard {
-  flex:0 0 auto !important;
-  margin-top:0 !important;
-}
-
 @media (max-width: 900px) {
   main {
     grid-template-columns:190px minmax(0,1fr) 235px !important;
@@ -152,6 +111,153 @@ main{height:calc(100vh - 84px)!important}
 .radialControl input,.heightControl input,.spawnAtControl input{width:58px!important}
 @media (max-width:900px){header{height:88px!important}main{height:calc(100vh - 88px)!important}}
 
+
+/* Mobile friendly layout: radar first, panels underneath, controls remain scrollable. */
+.mobileTabBar{display:none}
+@media (max-width: 760px), (pointer: coarse) and (max-width: 900px){
+  html, body{
+    height:auto!important;
+    min-height:100dvh!important;
+    max-height:none!important;
+    overflow:auto!important;
+    touch-action:auto!important;
+    -webkit-overflow-scrolling:touch;
+  }
+  body{overflow-x:hidden!important}
+  header{
+    position:sticky!important;
+    top:0!important;
+    height:auto!important;
+    max-height:42dvh!important;
+    overflow-y:auto!important;
+    padding:6px!important;
+  }
+  .headerRow{
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    min-height:42px!important;
+    padding-bottom:3px!important;
+  }
+  button,select,input{
+    min-height:34px;
+    font-size:13px;
+  }
+  .miniBtn{width:34px;height:34px;font-size:18px}
+  .speedValue,.runtimeClock{min-height:34px;display:inline-flex;align-items:center;justify-content:center}
+  main{
+    display:flex!important;
+    flex-direction:column!important;
+    height:auto!important;
+    min-height:calc(100dvh - 92px)!important;
+    overflow:visible!important;
+    padding:6px!important;
+    gap:6px!important;
+  }
+  #scopeWrap{
+    order:1!important;
+    height:58dvh!important;
+    min-height:360px!important;
+    max-height:70dvh!important;
+    width:100%!important;
+    flex:0 0 auto!important;
+    touch-action:none!important;
+  }
+  .leftPanel{order:2!important}
+  .rightPanel{order:3!important}
+  .leftPanel,.rightPanel{
+    width:100%!important;
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+    display:flex!important;
+    flex-direction:column!important;
+  }
+  .leftPanel .aircraftCard,
+  .rightPanel .selectedCard,
+  .rightPanel .intentionsCard,
+  .rightPanel .syncCard{
+    flex:0 0 auto!important;
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  #trafficList{
+    max-height:34dvh!important;
+    overflow-y:auto!important;
+    -webkit-overflow-scrolling:touch;
+  }
+  #calls{
+    max-height:28dvh!important;
+    overflow-y:auto!important;
+    -webkit-overflow-scrolling:touch;
+  }
+  #selectedPanel{max-height:none!important;overflow:visible!important}
+  .syncCard{margin-top:0!important}
+  .popup{
+    width:min(92vw,260px)!important;
+    max-height:70dvh!important;
+  }
+}
+@media (max-width: 520px){
+  h1{font-size:14px}
+  .headerRow{gap:5px!important}
+  button,select,input{font-size:12px;padding:6px 8px}
+  .control select{min-width:104px;max-width:130px}
+  #scopeWrap{height:54dvh!important;min-height:300px!important}
+  main{padding:5px!important}
+  .card{padding:7px}
+}
+@media (orientation: landscape) and (max-height: 520px){
+  header{max-height:36dvh!important}
+  #scopeWrap{height:70dvh!important;min-height:260px!important}
+}
+
+
+/* Final responsive/mobile app layout */
+.mobileTabBar{display:none}
+@media (max-width: 760px), (pointer: coarse) and (max-width: 900px){
+  :root{--mobileTabs:54px}
+  html,body{height:100dvh;max-height:100dvh;overflow:hidden}
+  body{position:fixed;inset:0;width:100%;touch-action:manipulation}
+  header{height:auto!important;max-height:38dvh!important;overflow-y:auto!important;overflow-x:hidden!important;padding:5px!important;display:flex!important;flex-direction:column!important;gap:5px!important;position:relative!important}
+  .headerRow{display:flex!important;flex-wrap:wrap!important;gap:5px!important;width:100%;align-items:center!important}
+  .topRow h1{flex:0 0 auto;margin-right:4px}
+  .topRow #runtimeClock{margin-left:auto}
+  button,select,input{min-height:34px;font-size:13px;padding:6px 8px}
+  .miniBtn{width:34px;height:34px;font-size:18px;padding:0}
+  .speedValue,.runtimeClock{min-height:34px;display:inline-flex;align-items:center;justify-content:center}
+  .control{font-size:11px;gap:4px}
+  .control select{min-width:106px;max-width:132px}
+  .radialControl input,.heightControl input,.spawnAtControl input{width:68px!important}
+  main{height:calc(100dvh - var(--mobileHeader, 150px))!important;min-height:0!important;overflow:hidden!important;display:block!important;padding:5px 5px calc(var(--mobileTabs) + 5px)!important}
+  #scopeWrap{height:100%!important;min-height:0!important;width:100%!important;border-radius:12px!important}
+  .leftPanel,.rightPanel{position:absolute!important;left:5px!important;right:5px!important;bottom:calc(var(--mobileTabs) + 6px)!important;top:auto!important;height:min(48dvh,420px)!important;width:auto!important;z-index:20!important;display:none!important;overflow:hidden!important;gap:5px!important;background:rgba(7,16,31,.94);border-radius:14px}
+  body.mobile-panel-aircraft .leftPanel{display:flex!important}
+  body.mobile-panel-selected .rightPanel, body.mobile-panel-intentions .rightPanel, body.mobile-panel-session .rightPanel{display:flex!important}
+  body.mobile-panel-selected .rightPanel .intentionsCard, body.mobile-panel-selected .rightPanel .syncCard{display:none!important}
+  body.mobile-panel-intentions .rightPanel .selectedCard, body.mobile-panel-intentions .rightPanel .syncCard{display:none!important}
+  body.mobile-panel-session .rightPanel .selectedCard, body.mobile-panel-session .rightPanel .intentionsCard{display:none!important}
+  .leftPanel .aircraftCard,.rightPanel .selectedCard,.rightPanel .intentionsCard,.rightPanel .syncCard{height:100%!important;max-height:100%!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;flex:1 1 auto!important}
+  #trafficList,#calls,#selectedPanel{overflow-y:auto!important;-webkit-overflow-scrolling:touch;max-height:none!important;min-height:0!important;flex:1 1 auto!important}
+  .mobileTabBar{position:fixed;left:0;right:0;bottom:0;height:var(--mobileTabs);display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:5px calc(5px + env(safe-area-inset-right)) calc(5px + env(safe-area-inset-bottom)) calc(5px + env(safe-area-inset-left));background:#0e1728;border-top:1px solid #25334f;z-index:50}
+  .mobileTabBar button{min-height:40px;border-radius:10px;font-size:11px;padding:4px;background:#101a2d}
+  .mobileTabBar button.active{background:#2f4772;border-color:#7e9bcc;color:#fff;font-weight:700}
+  .popup{width:min(92vw,270px)!important;max-height:70dvh!important}
+}
+@media (max-width: 520px){
+  h1{font-size:14px}
+  button,select,input{font-size:12px;padding:6px 7px}
+  .control select{min-width:102px;max-width:122px}
+  .topRow .control{max-width:100%}
+  .bottomRow{max-height:22dvh;overflow-y:auto}
+}
+@media (orientation: landscape) and (max-height: 520px){
+  header{max-height:34dvh!important}
+  main{padding-bottom:46px!important}
+  .mobileTabBar{height:46px}
+  .leftPanel,.rightPanel{height:min(58dvh,320px)!important;bottom:50px!important}
+}
+
 </style>
 </head>
 <body>
@@ -169,7 +275,7 @@ main{height:calc(100vh - 84px)!important}
 <option value="B350">B350 / HDSN</option><option value="Hawk">Hawk / PHNX</option><option value="F18">F18 / HRTG</option><option value="PC21">PC21 / ALDN</option>
 <option value="BE79">BE79 / CLE</option><option value="C206">C206 / WGP</option><option value="PA31">PA31 / OCF</option><option value="D328">D328 / RSCU328</option><option value="C182">C182 / KOJ/SVA</option><option value="BE20">BE20 / MWU</option><option value="C208">C208 / HAM</option><option value="PA34">PA34 / KMN</option>
 </select></label>
-    <label class="control radialControl">Radial <input id="arrivalRadialInput" type="number" min="0" max="359" step="10" value="270"></label>
+    <label class="control radialControl">Radial <input id="arrivalRadialInput" type="number" min="0" max="359" value="270"></label>
     <label class="control heightControl">Height <input id="manualHeightInput" type="number" min="0" max="11000" step="100" value="3500"> FT</label>
     <button id="depHeadingBtn" type="button">Depart heading</button>
     <label class="control spawnAtControl">Spawn at <input id="arrivalDistanceInput" type="number" min="1" max="30" step="1" value="10"> NM</label>
@@ -187,6 +293,13 @@ main{height:calc(100vh - 84px)!important}
   <div class="card intentionsCard"><h2>Aircraft intentions</h2><div id="calls">Start a scenario, then add traffic.</div></div>
   <div class="card syncCard"><h2>Shared session</h2><span class="syncStatus" id="syncStatus">Local</span><label class="syncSessionLabel">Session code<input id="syncSessionInput" placeholder="ABC123" maxlength="8"></label><div class="syncRow"><button id="hostSessionBtn" class="syncBtn" type="button">Host</button><button id="joinSessionBtn" class="syncBtn" type="button">Join</button></div><div class="syncRow"><button id="copyTraineeLinkBtn" class="syncBtn" type="button">Copy Share Link</button><button id="leaveSessionBtn" class="syncBtn" type="button">Leave</button></div><div class="hint">Trainee can select aircraft and move labels locally, but cannot control traffic.</div></div>
 </aside>
+<nav id="mobileTabBar" class="mobileTabBar" aria-label="Mobile panels">
+  <button type="button" data-panel="radar" class="active">Radar</button>
+  <button type="button" data-panel="aircraft">Aircraft</button>
+  <button type="button" data-panel="selected">Selected</button>
+  <button type="button" data-panel="intentions">Intentions</button>
+  <button type="button" data-panel="session">Share</button>
+</nav>
 </main>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
@@ -235,66 +348,13 @@ function levelText(ft){return String(Math.max(0,Math.round((ft||0)/100))).padSta
   }
   return '';
 }function labelForAircraft(ac){return`${levelText(ac.alt)}${heightTrendArrow(ac)} ${String(Math.floor((ac.speed*60)/10)).padStart(3,'0')}`}
-function closestPointOnSegment(p,a,b){
-  const ab=sub(b,a),ap=sub(p,a),len2=ab.x*ab.x+ab.y*ab.y;
-  if(!len2)return {point:{...a},t:0};
-  const t=Math.max(0,Math.min(1,(ap.x*ab.x+ap.y*ab.y)/len2));
-  return {point:{x:a.x+ab.x*t,y:a.y+ab.y*t},t};
+function predictedInboundIntent(ac){
+  const m=runwayModel(ac.side??sideFromPosition(ac.pos)),inH=headingFromTo(ac.pos,m.c),off=angleDiff(inH,m.hdg);
+  if(off<=30)return 'will continue straight-in';
+  if(off>30&&off<90)return `will join ${circuitLegIntent(ac,'base')}`;
+  const dw=headingFromTo(m.downwindStart,m.downwindEnd),can=Math.abs(signedTurn(inH,dw))<=90;
+  return can?`will join ${circuitLegIntent(ac,'downwind')} or ${circuitLegIntent(ac,'base')}`:`will join ${circuitLegIntent(ac,'base')}`;
 }
-function pointSegmentDistance(p,a,b){return dist(p,closestPointOnSegment(p,a,b).point)}
-function routeLengthFromJoinPoint(joinPoint,remainingPoints){
-  let total=0,prev=joinPoint;
-  remainingPoints.forEach(pt=>{total+=dist(prev,pt);prev=pt});
-  return total;
-}
-function sideForCircuitDirection(direction){
-  // direction is the spoken circuit direction: 'left' or 'right'.
-  // side -1/1 changes depending on whether RWY09 or RWY27 is selected.
-  return circuitDirectionWord(-1)===direction?-1:1;
-}
-function radialInSector(radial,start,end){
-  radial=normDeg(radial); start=normDeg(start); end=normDeg(end);
-  if(start===end)return true;
-  if(start<end)return radial>=start&&radial<end;
-  return radial>=start||radial<end;
-}
-function arrivalJoinDecision(ac){
-  // Fixed sector lookup from the user's runway diagrams.
-  // Red lines are sector boundaries. The number in each sector sets the join:
-  // 1 straight-in, 2 left base, 3 left mid-downwind, 4 left downwind,
-  // 5 right downwind, 6 right mid-downwind, 7 right base.
-  // Normal arrivals never join upwind.
-  const radial=Number.isFinite(ac.arrivalRadial)?normDeg(ac.arrivalRadial):headingFromTo(centre(),ac.pos);
-  const rwy=rwyHdg();
-  const sectors=(rwy===270)?[
-    {from:360,to:60,join:7},
-    {from:60,to:110,join:1},
-    {from:110,to:180,join:2},
-    {from:180,to:225,join:3},
-    {from:225,to:270,join:4},
-    {from:270,to:315,join:5},
-    {from:315,to:360,join:6}
-  ]:[
-    {from:300,to:360,join:2},
-    {from:360,to:45,join:3},
-    {from:45,to:90,join:4},
-    {from:90,to:135,join:5},
-    {from:135,to:180,join:6},
-    {from:180,to:240,join:7},
-    {from:240,to:300,join:1}
-  ];
-  const selected=sectors.find(s=>radialInSector(radial,s.from,s.to))||sectors[0];
-  const join=selected.join;
-  if(join===1)return{mode:'straight-in',label:'straight-in',side:ac.side??sideFromPosition(ac.pos),join};
-  if(join===2)return{mode:'join-base',label:'base',side:sideForCircuitDirection('left'),join};
-  if(join===3)return{mode:'join-mid-downwind',label:'mid-downwind',side:sideForCircuitDirection('left'),join};
-  if(join===4)return{mode:'join-downwind',label:'downwind',side:sideForCircuitDirection('left'),join};
-  if(join===5)return{mode:'join-downwind',label:'downwind',side:sideForCircuitDirection('right'),join};
-  if(join===6)return{mode:'join-mid-downwind',label:'mid-downwind',side:sideForCircuitDirection('right'),join};
-  if(join===7)return{mode:'join-base',label:'base',side:sideForCircuitDirection('right'),join};
-  return{mode:'straight-in',label:'straight-in',side:ac.side??sideFromPosition(ac.pos),join:1};
-}
-function predictedInboundIntent(ac){const d=arrivalJoinDecision(ac);return d.mode==='straight-in'?'will continue straight-in':`will join ${circuitLegIntent(ac,d.label)}`;}
 function intentionLines(ac){const hVal=Number.isFinite(ac.assignedHeading)?ac.assignedHeading:(Number.isFinite(ac.currentHdg)?ac.currentHdg:(Number.isFinite(ac.departRadial)?ac.departRadial:rwyHdg()));const h=String(Math.round(hVal)).padStart(3,'0');const depFinal=Number.isFinite(ac.departRadial)?String(Math.round(ac.departRadial)).padStart(3,'0'):h;if(ac.mode?.includes('departure')){if(ac.mode==='departure-roll')return[`Departing runway ${String(rwyHdg()).padStart(3,'0')}`,`After departure: final heading ${depFinal}°`,altInstruction(ac)];if(ac.mode==='departure-runway-heading')return[`Runway heading ${String(rwyHdg()).padStart(3,'0')}°`,`Then final heading ${depFinal}°`,altInstruction(ac)];if(ac.mode==='departure-radial')return[`Outbound final heading ${depFinal}°`,altInstruction(ac)];return[`Departure`,`Final heading ${depFinal}°`,`Current heading ${h}°`,altInstruction(ac)];}if(ac.mode==='arrival-inbound'){return[predictedInboundIntent(ac),altInstruction(ac)];}if(ac.mode==='straight-in')return[ac.intention==='go around'?'Go Around':'Straight-in','Runway profile',ac.intention==='go around'?'Climb at threshold':altInstruction(ac)];if(ac.mode==='missed')return['Go Around','Climb runway heading',`Join ${goAroundCircuitDescription(ac)}`,'Climb to 015'];if(ac.mode==='rollout'||ac.mode==='landed')return['Landed','Rollout / terminate'];if(ac.mode==='manual-track')return[`Flying heading ${h}°`,altInstruction(ac)];if(ac.mode?.startsWith('join-')){let leg=ac.mode.replace('join-','');return[`Joining ${circuitLegIntent(ac,leg)}`,altInstruction(ac),ac.intention==='go around'?'Then Go Around':'Then land'];}if(ac.mode==='land')return['Final','Land',altInstruction(ac)];return[ac.status||'Operating',altInstruction(ac)]}
 function log(text){const cur=calls.textContent.startsWith('Start')?'':calls.textContent;calls.textContent=`[${String(Math.floor(simTime)).padStart(3,'0')}] ${text}\n`+cur}
 function resize(){const hasSize=canvas.width&&canvas.height,oldC=hasSize?centre():null,oldS=hasSize?scale():null;canvas.width=scopeWrap.clientWidth;canvas.height=scopeWrap.clientHeight;if(hasSize)rescaleAircraftGeometry(oldC,oldS,centre(),scale())}window.addEventListener('resize',resize);resize();
@@ -307,7 +367,7 @@ function manualHeightFt(){let h=Number(document.getElementById('manualHeightInpu
 function randomTrafficHeightFt(){return (25+Math.floor(Math.random()*86))*100}
 function spawnSelectedArrivalOnRadial(){const m=runwayModel(),rad=arrivalRadial(),spawnNm=arrivalDistanceNm(),pos=add(m.c,unitFromHeading(rad),nmToPx(spawnNm)),type=selectedAircraftType(),call=randomUnusedCall(type);if(!call){log(`${type}: callsign already active`);return}const inboundHdg=headingFromTo(pos,m.c),side=sideFromPosition(pos),startAlt=manualHeightFt();const ac={id:crypto.randomUUID(),call,type,pos,alt:startAlt,speed:P(type).s/60,side,mode:'arrival-inbound',route:[],routeIndex:0,intention:'full stop',currentHdg:inboundHdg,targetAlt:CIRCUIT_HEIGHT_FT,vTrend:'level',labelOffset:null,arrivalRadial:rad,spawnNm};aircraft.push(ac);log(`${call}: selected ${type} arrival, radial ${String(Math.round(rad)).padStart(3,'0')}, ${spawnNm} NM, height ${startAlt} FT.`);renderList();publishState(true)}
 function departureHeading(){return arrivalRadial()}function randomDepartureHeading(){return Math.floor(Math.random()*360)}function spawnDeparture(typeOverride,assigned=null,targetAltOverride=null){const m=runwayModel(),type=typeOverride||selectedAircraftType(),call=randomUnusedCall(type);if(!call){log(`${type}: callsign already active`);return}const airborne=add(m.thresholdIn,m.u,nmToPx(.45+Math.random()*1.2)),turnPoint=Math.random()<.45?add(m.thresholdOut,m.u,nmToPx(1.2+Math.random()*2)):add(airborne,m.u,nmToPx(.4+Math.random()*.5));const dep=assigned==null?randomDepartureHeading():normDeg(Number(assigned));const finalAlt=Number.isFinite(targetAltOverride)?targetAltOverride:3500;const ac={id:crypto.randomUUID(),call,type,pos:{...m.thresholdIn},alt:0,speed:P(type).s/60,side:1,mode:'departure-roll',route:[airborne,turnPoint],routeIndex:0,airbornePoint:airborne,turnPoint,departRadial:dep,currentHdg:m.hdg,assignedHeading:m.hdg,targetAlt:finalAlt,intention:'departure',vTrend:'level',labelOffset:null,status:`Rolling runway heading, then outbound ${String(dep).padStart(3,'0')} climbing to ${levelText(finalAlt)}`};aircraft.push(ac);log(`${call}: departure heading ${String(dep).padStart(3,'0')}, climb to ${levelText(finalAlt)}.`)}function spawnRandomArrival(){spawnArrival(randomAircraftType())}function spawnRandomDeparture(){spawnDeparture(randomAircraftType(),null,randomTrafficHeightFt())}function spawnDepartureAssignedHeading(){spawnDeparture(selectedAircraftType(),departureHeading(),manualHeightFt())}
-function chooseJoin(ac){const d=arrivalJoinDecision(ac);if(Number.isFinite(d.side)){ac.side=d.side;ac.forceCircuitSide=d.side}if(d.mode==='straight-in'){ac.mode='straight-in';ac.route=routeForMode(ac,'straight-in');ac.routeIndex=0;ac.targetAlt=0;log(`${ac.call}: straight-in.`);return}assignCircuitJoin(ac,d.mode,d.label)}
+function chooseJoin(ac){const m=runwayModel(ac.side),inH=headingFromTo(ac.pos,m.c),off=angleDiff(inH,m.hdg);if(off<=30){ac.mode='straight-in';ac.route=routeForMode(ac,'straight-in');ac.routeIndex=0;ac.targetAlt=0;log(`${ac.call}: straight-in.`);return}if(off>30&&off<90){assignCircuitJoin(ac,'join-base','base');return}const dw=headingFromTo(m.downwindStart,m.downwindEnd),can=Math.abs(signedTurn(inH,dw))<=90;if(Math.random()<.5&&can)assignCircuitJoin(ac,'join-downwind','downwind');else assignCircuitJoin(ac,'join-base','base')}
 function moveTowards(ac,target,dt,arc=true){const px=nmToPx(ac.speed/60)*runSpeed,d=dist(ac.pos,target);if(d<=Math.max(8,px*dt*1.15)){ac.pos={...target};return true}const desired=headingFromTo(ac.pos,target);if(ac.currentHdg==null)ac.currentHdg=desired;if(arc){const max=(P(ac.type).t||3)*dt*runSpeed,turn=signedTurn(ac.currentHdg,desired);ac.currentHdg=normDeg(ac.currentHdg+Math.max(-max,Math.min(max,turn)))}else ac.currentHdg=desired;ac.pos=add(ac.pos,unitFromHeading(ac.currentHdg),px*dt);return false}function moveOnHeading(ac,dt){const max=(P(ac.type).t||3)*dt*runSpeed,turn=signedTurn(ac.currentHdg??ac.assignedHeading,ac.assignedHeading);ac.currentHdg=normDeg((ac.currentHdg??ac.assignedHeading)+Math.max(-max,Math.min(max,turn)));ac.pos=add(ac.pos,unitFromHeading(ac.currentHdg),nmToPx(ac.speed/60)*runSpeed*dt)}
 function updateAltTo(ac,target,dt){const old=ac.alt,d=target-ac.alt;if(Math.abs(d)<8)ac.alt=target;else if(d>0)ac.alt+=Math.min(d,climbPerSec(ac)*dt);else ac.alt+=Math.max(d,-descentPerSec(ac)*dt);ac.vTrend=ac.alt>old+1?'up':(ac.alt<old-1?'down':'level')}
 function routeDistanceToPoint(ac,point){let total=0,prev=ac.pos;for(let i=ac.routeIndex;i<ac.route.length;i++){total+=dist(prev,ac.route[i]);if(dist(ac.route[i],point)<6)break;prev=ac.route[i]}return total}
@@ -414,6 +474,22 @@ document.getElementById('startBtn').onclick=()=>{if(syncMode==='trainee')return;
 updateRuntimeClock();updateAutoButton();updateTransportButtons();renderList();document.addEventListener('dragstart', e=>e.preventDefault());
 window.addEventListener('beforeunload',()=>{if(syncRef&&syncMode!=='local')publishNotice((syncMode==='instructor'?'Host':'Trainee')+' left the session.')});
 const urlParams=new URLSearchParams(location.search);if(urlParams.get('session')){const mode=urlParams.get('mode')==='trainee'?'trainee':'instructor';document.getElementById('syncSessionInput').value=cleanSessionId(urlParams.get('session'));setTimeout(()=>startSession(mode,document.getElementById('syncSessionInput').value),400)}
+
+function updateMobileHeaderHeight(){
+  const h=document.querySelector('header');
+  if(h)document.documentElement.style.setProperty('--mobileHeader', Math.ceil(h.getBoundingClientRect().height)+'px');
+}
+function setMobilePanel(panel){
+  ['radar','aircraft','selected','intentions','session'].forEach(p=>document.body.classList.toggle('mobile-panel-'+p,panel===p));
+  document.querySelectorAll('#mobileTabBar button').forEach(b=>b.classList.toggle('active',b.dataset.panel===panel));
+  hidePopup();
+  updateMobileHeaderHeight();
+  setTimeout(()=>{resize();draw();},50);
+}
+document.querySelectorAll('#mobileTabBar button').forEach(btn=>btn.addEventListener('click',()=>setMobilePanel(btn.dataset.panel)));
+window.addEventListener('orientationchange',()=>setTimeout(()=>{updateMobileHeaderHeight();resize();},250));
+window.addEventListener('resize',()=>setTimeout(updateMobileHeaderHeight,50));
+setTimeout(()=>{updateMobileHeaderHeight(); if(matchMedia('(max-width: 760px)').matches)setMobilePanel('radar');},100);
 requestAnimationFrame(tick);
 </script>
 </body>
